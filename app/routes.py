@@ -3,7 +3,8 @@ from flask import render_template
 # Add a route
 @app.route("/")
 def index():
-    return render_template('index.html', name = 'Moataz Hamdan')
+    countries = [ 'United States', 'Canada', 'Mexico', 'France', 'Egypt', 'China']
+    return render_template('index.html', name = 'Moataz Hamdan', countries=countries)
 
 @app.route("/new")
 def new():
