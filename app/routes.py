@@ -1,7 +1,4 @@
-from flask import Flask
-# Create an instance of the flask application 
-app = Flask(__name__)
-
+from app import app
 # Add a route
 @app.route("/")
 def index():

@@ -20,3 +20,5 @@ def say_goodbye():
     print('Goodbye, see you later!')
 
 say_goodbye()
+print('-' * 100)
+
