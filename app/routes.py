@@ -6,8 +6,7 @@ def index():
     countries = [ 'United States', 'Canada', 'Mexico', 'France', 'Egypt', 'China']
     return render_template('index.html', name = 'Moataz Hamdan', countries=countries)
 
-@app.route("/new")
-def new():
-    name = 'Moataz' + ' ' + 'Hamdan'
-    return f"This is a new route, how are you today {name}"
+@app.route("/signup")
+def signup():
+    return render_template('signup.html')
 
