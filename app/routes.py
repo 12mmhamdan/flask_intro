@@ -19,6 +19,12 @@ def signup():
         password=form.password.data
         print(first_name, last_name, username, email, password)
 
+        # CHeck user table to see if there are any users in db
+        check_user = db.session.execute(db.select(User).where( (User.username==username) | (User.email==email))).scalar()
+        if check_user:
+            print('A user with that username already exists')
+            return redirect(url_for('signup'))
+
         # create a new instance of the user class with the data from the form
         new_user = User(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
 
@@ -27,7 +33,5 @@ def signup():
         db.session.commit()
         # redirect to the homepage when completed and validated
         return redirect(url_for('index'))
-    else:
-        print('wrong password dummy')
     return render_template('signup.html', form=form)
 
