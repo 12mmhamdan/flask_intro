@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, url_for, redirect
 from app.forms import PostForm, SignUpForm
-from app.models import User
+from app.models import User, Post
 # Add a route
 @app.route("/")
 def index():
@@ -44,6 +44,12 @@ def create_post():
         body = form.body.data
         image_url = form.image_url.data or None
         print(title, body, image_url)
+
+        new_post = Post(title=title, body=body, image_url=image_url, user_id=1)
+
+        # add the new user obj to the database
+        db.session.add(new_post)
+        db.session.commit()
 
         
         
