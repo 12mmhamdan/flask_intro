@@ -2,6 +2,7 @@ from app import app, db
 from flask import render_template, url_for, redirect
 from app.forms import PostForm, SignUpForm
 from app.models import User, Post
+from flask_login import login_user, logout_user
 # Add a route
 @app.route("/")
 def index():
@@ -32,7 +33,14 @@ def signup():
         # add the new user obj to the database
         db.session.add(new_user)
         db.session.commit()
+
+        # log the user in
+        login_user(new_user)
+
+
         # redirect to the homepage when completed and validated
+
+
         return redirect(url_for('index'))
     return render_template('signup.html', form=form)
 
@@ -56,4 +64,10 @@ def create_post():
         
         return redirect(url_for('index'))
     return render_template('create_post.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 

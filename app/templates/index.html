@@ -4,8 +4,12 @@
 
 {% block header %}
     <h1>Welcome to the Kekambas Blog</h1>
+    {% if current_user.is_authenticated %}
+    <h4>Hello {{ current_user.first_name }}</h4>
+    {% else %}
     <h4>Please Sign Up or Log In to use the Blog</h4>
-{% endblock header %}
+    {% endif %}
+    {% endblock header %}
 
 {% block content %}
     <div class="col-12">
