@@ -2,17 +2,18 @@ from . import api
 from app import db
 from app.models import Post
 from flask import request
-from .auth import basic_auth
+from .auth import basic_auth, token_auth
 
 
 @api.route('/token')
 @basic_auth.login_required
 def get_token():
     auth_user = basic_auth.current_user()
-    token=auth_user.get_token()
-    return {'token':token,
-            'token_expiration': auth_user.token_expiration
-            }
+    token = auth_user.get_token()
+    return {
+        'token': token,
+        'token_expiration': auth_user.token_expiration
+    }
 
 
 @api.route('/posts')
@@ -31,6 +32,7 @@ def get_post(post_id):
 
 
 @api.route('/posts', methods=["POST"])
+@token_auth.login_required
 def create_post():
     # Check to see that the request body is JSON
     if not request.is_json:
@@ -51,8 +53,9 @@ def create_post():
     body = data.get('body')
     image_url = data.get('image_url')
 
+    current_user = token_auth.current_user()
     # Create a new Post instance with the data
-    new_post = Post(title=title, body=body, image_url=image_url, user_id=2)
+    new_post = Post(title=title, body=body, image_url=image_url, user_id=current_user.id)
     # add to the database
     db.session.add(new_post)
     db.session.commit()
