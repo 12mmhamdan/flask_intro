@@ -19,6 +19,8 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 
 login.login_view = 'login'
+login.login_message='You need to be logged in for that that!'
+login.login_message_category = 'info'
 
 # import all of the routes file into the current package
 from app import routes,models
